@@ -13,15 +13,25 @@ import java.util.Objects;
  */
 public class MyServer {
     static int portNumber = 1234;
-
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
-        ServerSocket serverSocket;
+    static ServerSocket serverSocket;
+    static boolean startServer(){
         try {
             serverSocket = new ServerSocket(portNumber);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
+
+    }
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+
+
+        if (!startServer()){
+            return;
+        }
+
         Socket clientSocket;
         try {
             clientSocket = serverSocket.accept();
