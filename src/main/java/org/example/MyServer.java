@@ -53,7 +53,6 @@ public class MyServer {
             e.printStackTrace();
 
         }
-
         System.out.println("Accept");
     }
 }
