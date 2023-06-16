@@ -8,7 +8,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Objects;
 
-public class ClientHandler {
+public class ClientHandler implements Runnable {
 
     private Socket clientSocket;
 
@@ -17,6 +17,7 @@ public class ClientHandler {
         InetAddress inetAddress = this.clientSocket.getInetAddress();
         System.out.println("Connected from: " + inetAddress);
     }
+
     boolean manage() {
 
         BufferedReader in;
@@ -46,5 +47,12 @@ public class ClientHandler {
 
         }
         return true;
+
+    }
+
+    @Override
+    public void run() {
+        manage();
+
     }
 }

@@ -32,9 +32,12 @@ public class MyServer {
             }
 
             ClientHandler clientHandler = new ClientHandler(clientSocket);
-            if (!clientHandler.manage()) {
+            Thread thread = new Thread(clientHandler);
+            thread.start();
+
+            /*if (!clientHandler.manage()) {
                 System.out.println("Client non funziona");
-            }
+            }*/
         }
         /*BufferedReader in = null;
         try {
