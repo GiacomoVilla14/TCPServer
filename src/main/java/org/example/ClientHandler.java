@@ -15,7 +15,7 @@ public class ClientHandler {
     public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
         InetAddress inetAddress = this.clientSocket.getInetAddress();
-        System.out.println(inetAddress);
+        System.out.println("Connected from: " + inetAddress);
     }
     boolean manage() {
 
