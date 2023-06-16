@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Objects;
 
 /**
  * Hello world!
@@ -43,11 +44,11 @@ public class MyServer {
             e.printStackTrace();
         }
 
-        String s = "";
+        String s;
         try {
-            while ((s = in.readLine()) != null) {
+            while ((s = Objects.requireNonNull(in).readLine()) != null) {
                 System.out.println(s);
-                out.println((s.toUpperCase()));
+                Objects.requireNonNull(out).println((s.toUpperCase()));
             }
         } catch (IOException e) {
             e.printStackTrace();
