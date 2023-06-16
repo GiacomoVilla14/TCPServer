@@ -22,25 +22,21 @@ public class MyServer {
     }
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-
-
         if (!startServer()) {
             return;
         }
-
-        Socket clientSocket;
-        try {
-            clientSocket = serverSocket.accept();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        while (true){
+            Socket clientSocket;
+            try {
+                clientSocket = serverSocket.accept();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            ClientHandler clientHandler = new ClientHandler(clientSocket);
+            if (!clientHandler.manage()) {
+                System.out.println("Client non funziona");
+            }
         }
-        ClientHandler clientHandler = new ClientHandler(clientSocket);
-        if (!clientHandler.manage()) {
-            System.out.println("Client non funziona");
-        }
-
-
         /*BufferedReader in = null;
         try {
             in = new BufferedReader(
@@ -66,7 +62,5 @@ public class MyServer {
             e.printStackTrace();
 
         }*/
-
-        System.out.println("Accept");
     }
 }
