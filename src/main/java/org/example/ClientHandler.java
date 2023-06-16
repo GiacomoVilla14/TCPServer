@@ -41,20 +41,23 @@ public class ClientHandler implements Runnable {
         String s;
         while (true) {
             try {
-                while ((s = Objects.requireNonNull(in).readLine()) != null) {
-                    System.out.println(s);
-                    Objects.requireNonNull(out).println((s.toUpperCase()));
-                }
+                if ((s = in.readLine()) == null) break;
             } catch (IOException e) {
                 e.printStackTrace();
                 return false;
             }
-            if (out.equals("login")) {
 
-                Command cmd = gson.fromJson(s, Command.class);
-                System.out.println("Cmd: " + cmd.cmd + " param1: " + cmd.param1 + " param2: " + cmd.param2);
+        }
+        if (out.equals("login")) {
+            Command cmd = gson.fromJson(s, Command.class);
+            System.out.println("Cmd: " + cmd.cmd + " param1: " + cmd.param1 + " param2: " + cmd.param2);
+        }
+        return true;
+    }
 
-            }
+    String executeCmd(Command cmd) {
+        if (cmd == null) {
+            return
         }
     }
 
