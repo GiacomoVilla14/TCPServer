@@ -1,5 +1,7 @@
 package org.example;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -35,19 +37,25 @@ public class ClientHandler implements Runnable {
             return false;
         }
 
+        Gson gson = new Gson();
         String s;
-        try {
-            while ((s = Objects.requireNonNull(in).readLine()) != null) {
-                System.out.println(s);
-                Objects.requireNonNull(out).println((s.toUpperCase()));
+        while (true) {
+            try {
+                while ((s = Objects.requireNonNull(in).readLine()) != null) {
+                    System.out.println(s);
+                    Objects.requireNonNull(out).println((s.toUpperCase()));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+            if (out.equals("login")) {
 
+                Command cmd = gson.fromJson(s, Command.class);
+                System.out.println("Cmd: " + cmd.cmd + " param1: " + cmd.param1 + " param2: " + cmd.param2);
+
+            }
         }
-        return true;
-
     }
 
     @Override
