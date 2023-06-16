@@ -46,19 +46,30 @@ public class ClientHandler implements Runnable {
                 e.printStackTrace();
                 return false;
             }
+            Command cmd = null;
+            try {
+                cmd = gson.fromJson(s, Command.class);
+            } catch (Exception e) {
 
+            }
+            // out.println(new Answer(false, "Command not recognised").asJson());
+            String result = "";
+            if (cmd != null) {
+                result = executeCmd(cmd);
+            } else {
+                Answer a = new Answer(false, "Command not recognised");
+                result = a.asJson();
+            }
+            out.println(result);
         }
-        if (out.equals("login")) {
-            Command cmd = gson.fromJson(s, Command.class);
-            System.out.println("Cmd: " + cmd.cmd + " param1: " + cmd.param1 + " param2: " + cmd.param2);
-        }
+        //if (out.equals("login")) {
+
+        //}
         return true;
     }
 
     String executeCmd(Command cmd) {
-        if (cmd == null) {
-            return
-        }
+        return new Answer(true, "Working on...").asJson();
     }
 
     @Override
