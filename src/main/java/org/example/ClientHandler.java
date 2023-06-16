@@ -8,14 +8,23 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.List;
 import java.util.Objects;
 
 public class ClientHandler implements Runnable {
 
     private Socket clientSocket;
 
-    public ClientHandler(Socket clientSocket) {
+    private UserManager userList;
+    /*public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
+        InetAddress inetAddress = this.clientSocket.getInetAddress();
+        System.out.println("Connected from: " + inetAddress);
+    }*/
+
+    public ClientHandler(Socket clientSocket, UserManager userList) {
+        this.clientSocket = clientSocket;
+        this.userList = userList;
         InetAddress inetAddress = this.clientSocket.getInetAddress();
         System.out.println("Connected from: " + inetAddress);
     }
@@ -55,7 +64,7 @@ public class ClientHandler implements Runnable {
             // out.println(new Answer(false, "Command not recognised").asJson());
             String result = "";
             if (cmd != null) {
-                result = executeCmd(cmd);
+                result = executeCmd(cmd, userList);
             } else {
                 Answer a = new Answer(false, "Command not recognised");
                 result = a.asJson();
@@ -68,8 +77,13 @@ public class ClientHandler implements Runnable {
         return true;
     }
 
-    String executeCmd(Command cmd) {
-        return new Answer(true, "Working on...").asJson();
+    String executeCmd(Command cmd, UserManager userList) {
+        if (userList.findUser(cmd)) {
+            return new Answer(true, "The user was recognized").asJson();
+        } else {
+            return new Answer(false, "The user couldn't be recognized").asJson();
+        }
+
     }
 
     @Override

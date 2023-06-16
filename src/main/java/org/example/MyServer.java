@@ -3,6 +3,8 @@ package org.example;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyServer {
     static int portNumber = 1234;
@@ -19,7 +21,15 @@ public class MyServer {
 
     }
 
+
+
     public static void main(String[] args) {
+        UserManager usersList = new UserManager();
+        usersList.addUser(new User("Giacomo", "12345"));
+        usersList.addUser(new User("Lorenzo", "12345"));
+        usersList.addUser(new User("Riccardo", "12345"));
+        usersList.addUser(new User("Giacomo", "12343"));
+
         if (!startServer()) {
             return;
         }
@@ -31,7 +41,7 @@ public class MyServer {
                 throw new RuntimeException(e);
             }
 
-            ClientHandler clientHandler = new ClientHandler(clientSocket);
+            ClientHandler clientHandler = new ClientHandler(clientSocket, usersList);
             Thread thread = new Thread(clientHandler);
             thread.start();
 
