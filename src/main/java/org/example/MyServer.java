@@ -1,8 +1,6 @@
 package org.example;
 
-
 import java.io.IOException;
-
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -25,13 +23,14 @@ public class MyServer {
         if (!startServer()) {
             return;
         }
-        while (true){
+        while (true) {
             Socket clientSocket;
             try {
                 clientSocket = serverSocket.accept();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
             ClientHandler clientHandler = new ClientHandler(clientSocket);
             if (!clientHandler.manage()) {
                 System.out.println("Client non funziona");
