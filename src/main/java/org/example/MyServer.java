@@ -1,20 +1,16 @@
 package org.example;
 
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Objects;
 
-/**
- * Hello world!
- */
 public class MyServer {
     static int portNumber = 1234;
     static ServerSocket serverSocket;
-    static boolean startServer(){
+
+    static boolean startServer() {
         try {
             serverSocket = new ServerSocket(portNumber);
             return true;
@@ -24,11 +20,12 @@ public class MyServer {
         }
 
     }
+
     public static void main(String[] args) {
         System.out.println("Hello World!");
 
 
-        if (!startServer()){
+        if (!startServer()) {
             return;
         }
 
@@ -38,8 +35,13 @@ public class MyServer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        ClientHandler clientHandler = new ClientHandler(clientSocket);
+        if (!clientHandler.manage()) {
+            System.out.println("Client non funziona");
+        }
 
-        BufferedReader in = null;
+
+        /*BufferedReader in = null;
         try {
             in = new BufferedReader(
                     new InputStreamReader(clientSocket.getInputStream()));
@@ -63,7 +65,8 @@ public class MyServer {
         } catch (IOException e) {
             e.printStackTrace();
 
-        }
+        }*/
+
         System.out.println("Accept");
     }
 }
